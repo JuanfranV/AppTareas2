@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832383473899",
+    "project_id": "proyectotareas-c2394",
+    "storage_bucket": "proyectotareas-c2394.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832383473899:android:ed2724891048e781f886ae",
+        "android_client_info": {
+          "package_name": "com.example.proyectotareas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVjQ3K2KbeD3JGI4Lm9gMkn3-cUwjm_1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
