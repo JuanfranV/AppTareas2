@@ -3,6 +3,7 @@ package com.example.proyectotareas;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,7 +12,12 @@ import com.example.proyectotareas.caracters.ApiClient;
 import com.example.proyectotareas.caracters.ApiService;
 import com.example.proyectotareas.model.UsuarioModel;
 
+import java.io.IOException;
+import java.util.Map;
+
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText edTEUser;
@@ -61,27 +67,22 @@ public class RegisterActivity extends AppCompatActivity {
         ApiService api = ApiClient.getClient().create(ApiService.class);
         UsuarioModel usuario = new UsuarioModel(user, pass);
 
-        api.registrar(usuario).enqueue(new retrofit2.Callback<String>() {
+        api.registrar(usuario).enqueue(new Callback<Map<String, String>>() {
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
 
-                if (!response.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Error del servidor", Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(RegisterActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                String r = response.body();
-
-                if ("Usuario creado".equals(r)) {
-                    Toast.makeText(RegisterActivity.this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(RegisterActivity.this, r, Toast.LENGTH_SHORT).show();
-                }
+                String mensaje = response.body().get("mensaje");
+                Toast.makeText(RegisterActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
             }
         });

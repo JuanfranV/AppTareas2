@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.proyectotareas.caracters.ApiClient;
 import com.example.proyectotareas.caracters.ApiService;
 import com.example.proyectotareas.model.UsuarioModel;
+import com.example.proyectotareas.model.UsuarioResponse;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import retrofit2.Call;
@@ -64,54 +65,29 @@ public class LoginActivity extends AppCompatActivity {
         ApiService api = ApiClient.getClient().create(ApiService.class);
         UsuarioModel usuario = new UsuarioModel(user, pass);
 
-        api.login(usuario).enqueue(new retrofit2.Callback<String>() {
+        api.login(usuario).enqueue(new Callback<UsuarioResponse>() {
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
 
-                if (!response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Error del servidor", Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                String r = response.body();
+                UsuarioResponse data = response.body();
 
-                if ("Login exitoso".equals(r)) {
-
-                    api.getUsuario(user).enqueue(new Callback<UsuarioModel>() {
-                        @Override
-                        public void onResponse(Call<UsuarioModel> call, Response<UsuarioModel> response) {
-
-                            if (!response.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Error obteniendo usuario", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-                            UsuarioModel u = response.body();
-
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                            i.putExtra("userId", u.getId());
-                            i.putExtra("username", u.getUsername());
-                            startActivity(i);
-                            finish();
-                        }
-
-                        @Override
-                        public void onFailure(Call<UsuarioModel> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, "Error obteniendo datos", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(LoginActivity.this, r, Toast.LENGTH_SHORT).show();
-                }
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                i.putExtra("username", data.getUsername());
+                i.putExtra("userId", data.getId());
+                startActivity(i);
+                finish();
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error de conexión " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
-
-
 }

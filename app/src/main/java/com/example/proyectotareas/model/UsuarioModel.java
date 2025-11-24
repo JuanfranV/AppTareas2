@@ -3,13 +3,6 @@ package com.example.proyectotareas.model;
 public class UsuarioModel {
     private String username;
     private String password;
-    private int id;
-
-    public UsuarioModel(String username, String password, int id) {
-        this.username = username;
-        this.password = password;
-        this.id = id;
-    }
 
     public UsuarioModel(String username, String password) {
         this.username = username;
@@ -32,11 +25,5 @@ public class UsuarioModel {
         this.password = password;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

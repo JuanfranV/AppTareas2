@@ -1,6 +1,9 @@
 package com.example.proyectotareas.caracters;
 
 import com.example.proyectotareas.model.UsuarioModel;
+import com.example.proyectotareas.model.UsuarioResponse;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,12 +14,12 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     @POST("registrar")
-    Call<String> registrar(@Body UsuarioModel user);
+    Call<Map<String, String>> registrar(@Body UsuarioModel user);
 
     @POST("login")
-    Call<String> login(@Body UsuarioModel user);
+    Call<UsuarioResponse> login(@Body UsuarioModel user);
 
     @GET("{username}")
-    Call<UsuarioModel> getUsuario(@Path("username") String username);
+    Call<UsuarioResponse> getUsuario(@Path("username") String username);
 
 }
