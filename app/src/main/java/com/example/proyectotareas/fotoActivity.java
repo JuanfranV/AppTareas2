@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.proyectotareas.caracters.MyApp;
+import com.example.proyectotareas.caracters.PhotoStorage;
 
 public class fotoActivity extends AppCompatActivity {
 
@@ -31,6 +32,10 @@ public class fotoActivity extends AppCompatActivity {
 
     private Uri uriSeleccionada;
 
+    private String usuarioRecibido;
+    private int idRecibido;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,10 @@ public class fotoActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        usuarioRecibido = getIntent().getStringExtra("username");
+        idRecibido = getIntent().getIntExtra("userId", -1);
+
 
         imViFoto = findViewById(R.id.imViFoto);
         buttonElegirFoto = findViewById(R.id.buttonElegirFoto);
@@ -57,9 +66,15 @@ public class fotoActivity extends AppCompatActivity {
 
         buttonEstablecer.setOnClickListener(v -> {
             if (uriSeleccionada != null) {
+
+                PhotoStorage.guardarFoto(fotoActivity.this, usuarioRecibido, uriSeleccionada.toString());
+
                 Intent intent = new Intent(fotoActivity.this, MainActivity.class);
                 intent.putExtra("imagenUri", uriSeleccionada.toString());
+                intent.putExtra("username", usuarioRecibido);
+                intent.putExtra("userId", idRecibido);
                 startActivity(intent);
+                finish();
             }
         });
 

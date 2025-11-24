@@ -5,212 +5,162 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
+    android:padding="16dp"
     tools:context=".EditarTareaActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:background="@color/cardview_dark_background"
+    <!-- TÍTULO PRINCIPAL DE LA PANTALLA -->
+    <TextView
+        android:id="@+id/teViEditarTarea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fondo_redondeado"
+        android:gravity="center"
+        android:text="Editar Tarea"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:paddingVertical="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.75" />
+
+    <!-- ETIQUETA TÍTULO -->
+    <TextView
+        android:id="@+id/teviTituloN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Título:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teViEditarTarea" />
+
+    <!-- INPUT TÍTULO (Editamos aquí) -->
+    <EditText
+        android:id="@+id/edTeTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Introduce el título..."
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/cardview_dark_background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teviTituloN" />
+
+    <!-- ETIQUETA DESCRIPCIÓN -->
+    <TextView
+        android:id="@+id/teViDescripcionN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Descripción:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edTeTitulo" />
+
+    <!-- INPUT DESCRIPCIÓN (Editamos aquí) -->
+    <EditText
+        android:id="@+id/edTeDescripcion"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:gravity="top|start"
+        android:hint="Introduce la descripción..."
+        android:inputType="textMultiLine"
+        android:maxLines="4"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/cardview_dark_background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teViDescripcionN" />
+
+    <!-- ETIQUETA ESTADO -->
+    <TextView
+        android:id="@+id/teviEstadoN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Estado:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edTeDescripcion" />
+
+    <!-- CHECKBOX COMPLETADO -->
+    <CheckBox
+        android:id="@+id/chBoCompletado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:buttonTint="@color/white"
+        android:text="Completado"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teviEstadoN" />
+
+    <!-- CHECKBOX PENDIENTE -->
+    <CheckBox
+        android:id="@+id/chBoPendiente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:buttonTint="@color/white"
+        android:text="Pendiente"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chBoCompletado" />
+
+    <!-- BOTONES DE ACCIÓN (Guardar, Cancelar, Borrar) -->
+
+    <Button
+        android:id="@+id/buttonGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCancelar"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FFB3B3"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBorrar"
+        app:layout_constraintStart_toEndOf="@+id/buttonGuardar" />
+
+    <Button
+        android:id="@+id/buttonBorrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="#FF0000"
+        android:text="Borrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toEndOf="@+id/buttonCancelar" />
 
-        <TextView
-            android:id="@+id/teviTituloN"
-            android:layout_width="318dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="56dp"
-            android:text="Titulo:"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/teViEditarTarea" />
-
-        <TextView
-            android:id="@+id/teviEstadoN"
-            android:layout_width="318dp"
-            android:layout_height="40dp"
-            android:text="Estado:"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edTeDescripcion" />
-
-        <TextView
-            android:id="@+id/teViTitulo"
-            android:layout_width="320dp"
-            android:layout_height="49dp"
-            android:background="@drawable/fondo_redondeado"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:text="Esperando..."
-            android:textColor="@color/white"
-            android:textSize="23sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teviTituloN" />
-
-        <TextView
-            android:id="@+id/teViEstado"
-            android:layout_width="318dp"
-            android:layout_height="50dp"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:text="Esperando..."
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/fondo_redondeado"
-            android:gravity="start|center"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teviEstadoN" />
-
-        <TextView
-            android:id="@+id/teViDescripcion"
-            android:layout_width="313dp"
-            android:layout_height="50dp"
-            android:background="@drawable/fondo_redondeado"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:text="Esperando..."
-            android:textColor="@color/white"
-            android:textSize="23sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teViDescripcionN" />
-
-        <TextView
-            android:id="@+id/teViEditarTarea"
-            android:layout_width="318dp"
-            android:layout_height="58dp"
-            android:layout_marginTop="44dp"
-            android:background="@drawable/fondo_redondeado"
-            android:gravity="center"
-            android:text="Editar tarea"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edTeTitulo"
-            android:layout_width="318dp"
-            android:layout_height="57dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:gravity="top|start"
-            android:hint="..."
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textSize="23dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teViTitulo" />
-
-        <EditText
-            android:id="@+id/edTeDescripcion"
-            android:layout_width="318dp"
-            android:layout_height="57dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:gravity="top|start"
-            android:hint="..."
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textSize="23dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.351"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teViDescripcion" />
-
-        <TextView
-            android:id="@+id/teViDescripcionN"
-            android:layout_width="318dp"
-            android:layout_height="40dp"
-            android:text="Descripcion:"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edTeTitulo" />
-
-        <CheckBox
-            android:id="@+id/chBoCompletado"
-            android:layout_width="318dp"
-            android:layout_height="50dp"
-            android:buttonTint="@color/white"
-            android:text="Completado"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.318"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teViEstado" />
-
-        <CheckBox
-            android:id="@+id/chBoPendiente"
-            android:layout_width="318dp"
-            android:layout_height="50dp"
-            android:buttonTint="@color/white"
-            android:text="Pendiente"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.351"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chBoCompletado" />
-
-        <Button
-            android:id="@+id/buttonGuardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
-            android:background="@drawable/fondo_redondeado"
-            android:text="Guardar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonCancelar"
-            app:layout_constraintHorizontal_bias="0.756"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/buttonCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="#FFB3B3"
-            android:text="Cancelar"
-            android:textColor="#FF0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonBorrar"
-            app:layout_constraintTop_toBottomOf="@+id/chBoPendiente"
-            app:layout_constraintVertical_bias="0.34" />
-
-        <Button
-            android:id="@+id/buttonBorrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="64dp"
-            android:backgroundTint="#FF0000"
-            android:text="Borrar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.proyectotareas.caracters.AnalyticsHelper;
 import com.example.proyectotareas.caracters.ApiClient;
 import com.example.proyectotareas.caracters.ApiService;
 import com.example.proyectotareas.model.UsuarioModel;
@@ -69,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
 
+                AnalyticsHelper.logLogin(user);
                 if (!response.isSuccessful() || response.body() == null) {
                     Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                     return;
@@ -86,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UsuarioResponse> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                AnalyticsHelper.logLoginFailed(t.getMessage());
             }
 
         });

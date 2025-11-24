@@ -45,7 +45,6 @@ public class AgregarTareaActivity extends AppCompatActivity {
 
         chBoPendiente.setChecked(true);
 
-
         chBoCompletado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
