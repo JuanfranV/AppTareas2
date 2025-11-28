@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imViFoto;
     public ActivityResultLauncher<Intent> agregarTareaLauncher;
     TextView txtClima;
-    String API_KEY = "08279d7fa577b4bc7025a401f440330d";
+    String API_KEY = ""; // api key de openweathermap
     private String username;
 
     private int userId;
