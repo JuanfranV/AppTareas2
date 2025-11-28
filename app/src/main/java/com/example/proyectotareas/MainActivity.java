@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public ActivityResultLauncher<Intent> agregarTareaLauncher;
     TextView txtClima;
     String API_KEY = "08279d7fa577b4bc7025a401f440330d";
-
-    private String fotoGuardada;
     private String username;
 
     private int userId;
@@ -69,15 +67,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         username = getIntent().getStringExtra("username");
+        userId = getIntent().getIntExtra("userId", -1);
 
-        fotoGuardada = PhotoStorage.obtenerFoto(this, username);
-
-        if (fotoGuardada != null) {
-            Uri uri = Uri.parse(fotoGuardada);
-            imViFoto.setImageURI(uri);
+        if (username == null || userId == -1) {
+            Toast.makeText(this, "Sesión inválida", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        userId = getIntent().getIntExtra("userId", -1);
+        imViFoto = findViewById(R.id.imViFoto);
+
+        if (username != null) {
+            String foto = PhotoStorage.obtenerFoto(this, username);
+            if (foto != null) {
+                imViFoto.setImageURI(Uri.parse(foto));
+            }
+        }
+
 
 
         txtClima = findViewById(R.id.teViClima);
@@ -153,13 +159,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imViFoto = findViewById(R.id.imViFoto);
-
         imViFoto.setOnClickListener( view ->{
-            Intent intent = new Intent(MainActivity.this, fotoActivity.class);
+            Intent intent = new Intent(this, fotoActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("userId", userId);
             startActivity(intent);
+
         });
 
         String imageUriString = getIntent().getStringExtra("imagenUri");
@@ -176,8 +181,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (username != null) {
+            String foto = PhotoStorage.obtenerFoto(this, username);
+            if (foto != null) {
+                imViFoto.setImageURI(Uri.parse(foto));
+            }
+        }
+
         AnalyticsHelper.logListTasks();
     }
+
 
 
     private void obtenerClima(String ciudad) {
@@ -225,11 +239,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtenerTareasDesdeAPI() {
-        if (username == null || username.isEmpty()) {
-            Toast.makeText(this, "No se recibió el usuario", Toast.LENGTH_SHORT).show();
+        if (userId == -1) {
+            Toast.makeText(this, "ID de usuario inválido", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
+
 
         String url = "https://apitareas-u3nf.onrender.com/api/tareas/" + userId;
 

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +51,12 @@ public class fotoActivity extends AppCompatActivity {
         usuarioRecibido = getIntent().getStringExtra("username");
         idRecibido = getIntent().getIntExtra("userId", -1);
 
+        if (usuarioRecibido == null || idRecibido == -1) {
+            Toast.makeText(this, "Sesión inválida", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
 
         imViFoto = findViewById(R.id.imViFoto);
         buttonElegirFoto = findViewById(R.id.buttonElegirFoto);
@@ -65,17 +72,23 @@ public class fotoActivity extends AppCompatActivity {
         });
 
         buttonEstablecer.setOnClickListener(v -> {
-            if (uriSeleccionada != null) {
-
-                PhotoStorage.guardarFoto(fotoActivity.this, usuarioRecibido, uriSeleccionada.toString());
-
-                Intent intent = new Intent(fotoActivity.this, MainActivity.class);
-                intent.putExtra("imagenUri", uriSeleccionada.toString());
-                intent.putExtra("username", usuarioRecibido);
-                intent.putExtra("userId", idRecibido);
-                startActivity(intent);
-                finish();
+            if (uriSeleccionada == null) {
+                Toast.makeText(this, "Selecione una imagen", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (usuarioRecibido == null || usuarioRecibido.isEmpty()) {
+                Toast.makeText(this, "No se recibió el usuario", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            PhotoStorage.guardarFoto(this, usuarioRecibido, uriSeleccionada.toString());
+
+            Intent intent = new Intent(fotoActivity.this, MainActivity.class);
+            intent.putExtra("username", usuarioRecibido);
+            intent.putExtra("userId", idRecibido);
+            startActivity(intent);
+            finish();
         });
 
 
@@ -103,22 +116,34 @@ public class fotoActivity extends AppCompatActivity {
     }
 
     private void abrirGaleria() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+
             uriSeleccionada = data.getData();
+
+            getContentResolver().takePersistableUriPermission(
+                    uriSeleccionada,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+            );
+
             imViFoto.setImageURI(uriSeleccionada);
 
             Bundle params = new Bundle();
             params.putString("uri", uriSeleccionada.toString());
             MyApp.logEvent("photo_selected", params, this);
-
         }
     }
+
 }
